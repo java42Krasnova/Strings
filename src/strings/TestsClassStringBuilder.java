@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+/*
+ * V.R. OK
+ */
 class TestsClassStringBuilder {
 
 	final StringBuilder strBilderTest = new StringBuilder("Happy");

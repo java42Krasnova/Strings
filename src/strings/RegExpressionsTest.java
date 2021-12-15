@@ -153,12 +153,13 @@ class RegExpressionsTest {
  	}
  	@Test
  	void splitTest () {
- 		String expr = " 20 +10 * 2	/100 +4     ";
+ 		String expr = "20 +10 * 2	/100 +4     ";
  		String [] operatorsExp = {"", "+", "*", "/", "+"};
  		assertArrayEquals(operatorsExp, getOperatorsExpression(expr));
  		String [] operandsExp = {"20", "10", "2", "100", "4"};
+ 		String operator = "[+*/-]";
  		assertArrayEquals(operandsExp, getOperandsExpression(expr));
- 		assertArrayEquals(operandsExp, getOperandsExpression2(expr));
+ 		assertArrayEquals(operandsExp, getOperandsExpression2(expr,operator ));
 
  	}
 
@@ -166,25 +167,20 @@ class RegExpressionsTest {
  		// TODO the method returns array of strings containing only the operands of the given expression
  		// see test. Based on the method split of the class String
  		//Done
- 		String delimiter = "(\\s*)";// 
- 		String operator = "[+*/-]";
  		String str = expr.trim();
- 		return str.split(delimiter+operator+delimiter);
- 		//return str.split("\\s*[+*/-]\\s*");
+ 		return str.split("\\D+");
  	}
- 	private String[] getOperandsExpression2(String expr) {
+ 	private String[] getOperandsExpression2(String expr, String operator) {
  		// TODO second version
  		//Done
- 		String operator = "[+*/-]";
- 		String str = getStringWithoutSpaces(expr);
- 		return str.split(operator);
+ 		return getStringWithoutSpaces(expr).split(operator);
  	}
  	private String[] getOperatorsExpression(String expr) {
  		// TODO the method returns array of strings containing the operators of the given expression
  		// with empty string as the first string (see test)
  		//based on the method split of the class String
  		//Done
- 		return expr.split("\\s*\\d*[^+*/-]");
+ 		return expr.split("[\\d\\s]+");
  		
  	}
 

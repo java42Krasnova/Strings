@@ -39,9 +39,9 @@ public static String arithmeticExpression() {
 //TODO done
 public static String ipV4() {
 	String ipNum = "("+ ipV4Part()+")";
-	String dilimetr = "[.]";
-	//return String.format("(%1$s%2$s){3}%1$s" ,ipNum, dilimetr);
-	return "(" + ipNum + dilimetr +")"+"{3}" + ipNum;
+	String delimetr = "\\.";
+	//return String.format("(%1$s%2$s){3}%1$s" ,ipNum, delimetr);
+	return "(" + ipNum + delimetr +")"+"{3}" + ipNum;
 	
 }/**
  * 
@@ -52,10 +52,10 @@ public static String ipV4() {
  */
 //TODO done
 public static String mobileIsraelPhone() {
-	String prefiks = "(\\+972\\-?\\s*|0)";
+	String regionalCode = "(\\+972\\-?\\s*|0)";
 	String code = "(5\\d|7[2-7])";
 	String number ="(\\-?\\d){7}";
 	//return String.format("%1$s%2$s%3$s", prefiks, code, number);
-	return prefiks+code+ number;
+	return regionalCode+code+ number;
 }
 }

@@ -98,7 +98,7 @@ public class BaseSecret {
 	private char getSymbol(int dig) {
 		return secret.charAt(dig);
 	}
-
+	
 	public boolean matches(String code, String decString) {
 		// TODO done
 		int res = 0;

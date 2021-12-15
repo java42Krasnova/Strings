@@ -84,13 +84,13 @@ public class BaseSecret {
 		int base = getBase();
 		do {
 			int dig = num % base;
+			num = num / base;
 			if (isKeyDigital()) {
 				builder.insert(0, dig);
 			} else {
 				char rem = getSymbol(dig);
 				builder.insert(0, rem);
 			}
-			num = num / base;
 		} while (num != 0);
 		return builder.toString();
 	}
@@ -103,6 +103,9 @@ public class BaseSecret {
 		// TODO done
 		int res = 0;
 		for (char symbol : code.toCharArray()) {
+			if (secret.indexOf(symbol) == -1) {
+				throw new IllegalArgumentException("Code don't match to secret key");
+			}
 			res = res * getBase() + secret.indexOf(symbol);
 		}
 		return res == Integer.parseInt(decString);

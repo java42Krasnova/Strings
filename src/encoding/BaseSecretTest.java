@@ -35,17 +35,14 @@ class BaseSecretTest {
 
 	@Test
 	void testToSecretString() {
-		bs.setSectet(".-");
-		assertEquals("-..", bs.toSecretString(4));
-		bs.setSectet("6");//digital key checking
-		assertEquals("10", bs.toSecretString(6));
 		boolean fl = false;
 		try {
-			bs.setSectet("0");//argument can't be equal zero
-		} catch (ArithmeticException e) {
+			bs.setSectet(".-");
+		} catch (IllegalArgumentException e) {
 			fl = true;
 		}
-		assertTrue(fl);
+		assertFalse(fl);
+		assertEquals("-..", bs.toSecretString(4));
 		fl = false;
 		try {
 			bs.setSectet("j");// to short

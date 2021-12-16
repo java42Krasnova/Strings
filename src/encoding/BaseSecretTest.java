@@ -52,7 +52,7 @@ class BaseSecretTest {
 		assertTrue(fl);
 		fl = false;
 		try {
-			bs.setSectet("mmm");//not unique key for ciphering 
+			bs.setSectet("mmm");// not unique key for ciphering
 		} catch (IllegalArgumentException e) {
 			fl = true;
 		}
@@ -61,12 +61,18 @@ class BaseSecretTest {
 
 	@Test
 	void testMatches() {
-		bs.setSectet("()");
-		assertTrue(bs.matches(")((", "4"));
-		assertFalse(bs.matches("())(", "8"));
 		boolean fl = false;
 		try {
-			bs.matches("9s(", "4");//if code don't match to secret key 
+			bs.setSectet("()");
+		} catch (IllegalArgumentException e) {
+			fl = true;
+		}
+		assertFalse(fl);
+		assertTrue(bs.matches(")((", "4"));
+		assertFalse(bs.matches("())(", "8"));
+		fl = false;
+		try {
+			bs.matches("9s(", "4");// if code don't match to secret key
 		} catch (IllegalArgumentException e) {
 			fl = true;
 		}

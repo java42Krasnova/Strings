@@ -26,6 +26,7 @@ public class BaseSecret {
 	private int getBase() {
 		return secret.isEmpty() ? 0 : secret.length();
 	}
+	
 	public static String toBinaryString(int num) {
 		StringBuilder builder = new StringBuilder();
 		do {

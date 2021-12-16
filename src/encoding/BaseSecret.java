@@ -8,13 +8,12 @@ public class BaseSecret {
 	public void setSectet(String sectet) {
 		this.secret = sectet;
 		if (!isValidKey()) {
-			throw new IllegalArgumentException("Invalid key for ciphering."
-					+ " Key must be unique and longer then 1 character");
+			throw new IllegalArgumentException(String.format
+					("Invalid key for ciphering, key is %s",sectet));
 		}
 	}
-
 	private boolean isValidKey() {
-		if (getBase() <= 1) {
+		if (secret.length() <= 1) {
 			return false;
 		}
 		HashSet<Character> checkHesh = new HashSet<Character>();
@@ -24,16 +23,15 @@ public class BaseSecret {
 		}
 		return secret.length() == checkHesh.size();
 	}
-
-	private int getBase() {
-		return secret.isEmpty() ? 0 : secret.length();
-	}
-
 	
 	public String toSecretString(int num) {
 		// TODO done
 		StringBuilder builder = new StringBuilder();
-		int base = getBase();
+		if(secret == null) {
+			return "key is not seted up";
+		}
+		int base = secret.length();
+		
 		do {
 			int dig = num % base;
 			num = num / base;
@@ -49,7 +47,7 @@ public class BaseSecret {
 
 	public boolean matches(String code, String decString) {
 		// TODO done
-		if (!decString.matches("\\d+")) {
+		if(secret == null |!decString.matches("\\d+")) {
 			return false;
 		}
 		int res = 0;
@@ -57,7 +55,7 @@ public class BaseSecret {
 			if (secret.indexOf(symbol) == -1) {
 				return false;
 			}
-			res = res * getBase() + secret.indexOf(symbol);
+			res = res * secret.length() + secret.indexOf(symbol);
 		}
 		return res == Integer.parseInt(decString);
 	}

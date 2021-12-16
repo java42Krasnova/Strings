@@ -33,6 +33,7 @@ class BaseSecretTest {
 
 	@Test
 	void testToSecretString() {
+		bs.toSecretString(4);
 		boolean fl = false;
 		try {
 			bs.setSectet(".-");

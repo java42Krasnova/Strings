@@ -7,64 +7,29 @@ public class BaseSecret {
 
 	public void setSectet(String sectet) {
 		this.secret = sectet;
-		if (getBase() <= 1 | !isUniqueKey()) {
-			throw new IllegalArgumentException("Invalid key for ciphering");
+		if (!isValidKey()) {
+			throw new IllegalArgumentException("Invalid key for ciphering."
+					+ " Key must be unique and longer then 1 character");
 		}
 	}
 
-	private boolean isUniqueKey() {
-		HashSet<Character> chekHesh = new HashSet<Character>();
+	private boolean isValidKey() {
+		if (getBase() <= 1) {
+			return false;
+		}
+		HashSet<Character> checkHesh = new HashSet<Character>();
 		char[] letersFromString = secret.toCharArray();
 		for (char letter : letersFromString) {
-			if (!chekHesh.add(letter)) {
-				return false;
-			}
+			checkHesh.add(letter) ;
 		}
-		return true;
+		return secret.length() == checkHesh.size();
 	}
 
 	private int getBase() {
 		return secret.isEmpty() ? 0 : secret.length();
 	}
+
 	
-	public static String toBinaryString(int num) {
-		StringBuilder builder = new StringBuilder();
-		do {
-			int rem = num % 2;
-			builder.insert(0, rem);
-			num = num / 2;
-		} while (num != 0);
-		return builder.toString();
-	}
-
-	public static String toDecimalString(int num) {
-		StringBuilder builder = new StringBuilder();
-		do {
-			int rem = num % 10;
-			builder.insert(0, rem);
-			num = num / 10;
-		} while (num != 0);
-		return builder.toString();
-	}
-
-	public static int parseIntBinary(String binaryStr) {
-		int res = 0;
-		int length = binaryStr.length();
-		for (int i = 0; i < length; i++) {
-			res = res * 2 + (binaryStr.charAt(i) - '0');
-		}
-		return res;
-	}
-
-	public static int parseIntDecimal(String decimalString) {
-		int res = 0;
-		int length = decimalString.length();
-		for (int i = 0; i < length; i++) {
-			res = res * 10 + (decimalString.charAt(i) - '0');
-		}
-		return res;
-	}
-
 	public String toSecretString(int num) {
 		// TODO done
 		StringBuilder builder = new StringBuilder();
@@ -84,13 +49,73 @@ public class BaseSecret {
 
 	public boolean matches(String code, String decString) {
 		// TODO done
+		if (!decString.matches("\\d+")) {
+			return false;
+		}
 		int res = 0;
 		for (char symbol : code.toCharArray()) {
 			if (secret.indexOf(symbol) == -1) {
-				throw new IllegalArgumentException("Code don't match to secret key");
+				return false;
 			}
 			res = res * getBase() + secret.indexOf(symbol);
 		}
 		return res == Integer.parseInt(decString);
 	}
+	
+	public static String toDigString(int num, int base) {
+		StringBuilder builder = new StringBuilder();
+		do {
+			int rem = num % base;
+			builder.insert(0, rem);
+			num = num / base;
+		} while (num != 0);
+		return builder.toString();
+	}
+
+	public static int parseDig(String binaryStr, int base) {
+		int res = 0;
+		int length = binaryStr.length();
+		for (int i = 0; i < length; i++) {
+			res = res * base + (binaryStr.charAt(i) - '0');
+		}
+		return res;
+	}
+
+//	public static String toBinaryString(int num) {
+//		StringBuilder builder = new StringBuilder();
+//		do {
+//			int rem = num % 2;
+//			builder.insert(0, rem);
+//			num = num / 2;
+//			
+//		}while(num != 0);
+//		return builder.toString();
+//	}
+//	public static String toDecimalString(int num) {
+//		StringBuilder builder = new StringBuilder();
+//		do {
+//			int rem = num % 10;
+//			builder.insert(0, rem);
+//			num = num / 10;
+//			
+//		}while(num != 0);
+//		return builder.toString();
+//	}
+//	public static int parseIntBinary(String binaryStr) {
+//		int res = 0;
+//		int length = binaryStr.length();
+//		for (int i = 0; i < length; i++) {
+//			res = res * 2 + (binaryStr.charAt(i) - '0');
+//		}
+//		return res;
+//	}
+//	public static int parseIntDecimal(String decString) {
+//		int res = 0;
+//		int length = decString.length();
+//		for (int i = 0; i < length; i++) {
+//			res = res * 10 + (decString.charAt(i) - '0');
+//		}
+//		return res;
+	//}
 }
+
